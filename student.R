@@ -108,19 +108,6 @@ ui <- fluidPage(
   ###############################################################################################
 )
 
-# ui <- secure_app(ui, theme = "paper", status = "primary", 
-#                  enable_admin = TRUE,language = "en",
-#                  tags_top = tags$div(style="display:flex;",
-#                                      div(style="width: 20%;margin-left:0px;padding:0;",
-#                                          img(src="img/about-img.jpg", width="80px", style="margin:0")
-#                                          ),
-#                                      div(style="width: 79%;margin-left:10px;padding-left:10px;",
-#                                          h4(instansi, style="font-weight: bold;text-align: left;margin-left: 0;margin-top: 10px;margin-bottom: 0;padding: 0;"),
-#                                          h5("Sistem Informasi Pendidikan", style="text-align: left;margin-left: 0;margin-top: 3px;margin-bottom: 3px;padding: 0;font-size: 120%;"),
-#                                          h5("Aplikasi Ujian Berbasis Daring", style="text-align: left;margin: 0;padding: 0;font-size: 120%;")
-#                                          )
-#                                      )
-#                  )
 
 
 server <- function(input, output, session){
