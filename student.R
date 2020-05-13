@@ -91,16 +91,14 @@ ui <- fluidPage(
   theme = shinytheme("paper"),
   tags$style('body{background-color:#ffffff;}'),
   title = instansi,
-  h4("Sistem Informasi Pendidikan", style = "text-align:center;font-weight:bold;"),
+  h4("Sistem Informasi Pendidikan", style = "text-align:center;font-weight:bold;color: #03b1fc;"),
   div(id = "home",
       dataTableOutput("user"),
-      # wellPanel(
       h4("Pengumuman", style="font-wieght:bold;text-align: center;"),
       uiOutput("pengumuman")
-                # )
   ),
   div(id = "profile_user",
-      uiOutput("profile_ui")
+      uiOutput("panduan_ui")
   ),
   uiOutput("soals"),
   
@@ -159,34 +157,33 @@ server <- function(input, output, session){
     req(auth$user)
     output$fabbtn <- renderUI({
       fab_button(inputId = "fab", status = "primary", icon = icon("medrt"),
-                 actionButton(inputId = "logout", label = NULL, tooltip = "Logout", icon = icon("sign-out")),
-                 actionButton(inputId = "ujian", label = NULL, tooltip = "Ujian", icon = icon("paste")),
-                 # actionButton(inputId = "pengumuman", label = NULL, tooltip = "Pengumuman", icon = icon("envelope-open-text")),
-                 actionButton(inputId = "profile", label = NULL, tooltip = "Profile", icon = icon("user"))
+                 # actionButton(inputId = "logout", label = NULL, tooltip = "Logout", icon = icon("sign-out")),
+                 # actionButton(inputId = "ujian", label = NULL, tooltip = "Ujian", icon = icon("clipboard-list")),
+                 # # actionButton(inputId = "pengumuman", label = NULL, tooltip = "Pengumuman", icon = icon("envelope-open-text")),
+                 # actionButton(inputId = "panduan", label = NULL, tooltip = "Panduan", icon = icon("book-reader"))
+                 actionBttn(style = "material-circle", color = "primary", size = "xs", no_outline = TRUE, 
+                            inputId = "logout", label = NULL, icon = icon("sign-out")),
+                 actionBttn(style = "material-circle", color = "primary", size = "xs", no_outline = TRUE, 
+                            inputId = "ujian", label = NULL, icon = icon("clipboard-list")),
+                 actionBttn(style = "material-circle", color = "primary", size = "xs", no_outline = TRUE, 
+                            inputId = "panduan", label = NULL, icon = icon("book-reader"))
       )
     })
   })
   
-  # observeEvent(input$profile, {
-  #   hideElement("home")
-  #   # hideElement("pengumuman_user")
-  #   output$profile_ui <- renderUI({
-  #     tagList(
-  #       div(style="display:flex;",
-  #         h6(auth$user_info)
-  #       )
-  #       )
-  #   })
-  # })
-  # 
-  # observeEvent(input$pengumuman, {
-  #   # hideElement("home")
-  #   # hideElement("profile_user")
-  #   # showElement("pengumuman_user")
-  #   pengumuman <- getTable("master_pengumuman")
-  # 
-  #   shinyalert(title = "Pengumuman", text = gsub("\\\\n", "<br/>", paste0(pengumuman$Pengumuman)), html = TRUE)
-  # })
+  observeEvent(input$panduan, {
+    panduan <- ""
+    shinyalert(imageUrl = "img/big-logo.png", imageWidth = 80, imageHeight = 78, animation = "slide-from-top",
+               title = sprintf('<div style="margin:auto;text-align: center;">
+                 <h5 style="font-weight:bold;text-align:center;margin-left:0;margin-bottom:0;margin-top:2px;padding:0;font-size:45%%;">%s</h5>
+                 <h5 style="text-align:center;margin-left:0;margin-bottom:3px;margin-top:3px;padding:0;font-size:30%%;">Sistem Informsasi Pendidikan</h5>
+                 <h5 style="text-align:center;margin:0;padding:0;font-size:30%%;">Aplikasi Ujian Online</h5>
+                 </div>', instansi),
+               text = panduan, 
+               html = TRUE
+    )
+  })
+
   
   output$pengumuman <- renderUI({
     req(auth$user)
@@ -320,9 +317,15 @@ server <- function(input, output, session){
       
       output$fabbtn <- renderUI({
         fab_button(inputId = "fab", status = "primary", icon = icon("medrt"),
-                   actionButton(inputId = "submit", label = NULL, tooltip = "Submit", icon = icon("send")),
-                   actionButton(inputId = "prevs", label = NULL, tooltip = "Sebelumnya", icon = icon("chevron-circle-left")),
-                   actionButton(inputId = "nexts", label = NULL, tooltip = "Berikutnya", icon = icon("chevron-circle-right"))
+                   # actionButton(inputId = "submit", label = NULL, tooltip = "Submit", icon = icon("send")),
+                   # actionButton(inputId = "prevs", label = NULL, tooltip = "Sebelumnya", icon = icon("chevron-circle-left")),
+                   # actionButton(inputId = "nexts", label = NULL, tooltip = "Berikutnya", icon = icon("chevron-circle-right"))
+                   actionBttn(style = "material-circle", color = "primary", size = "xs", no_outline = TRUE, 
+                              inputId = "submit", label = NULL, icon = icon("send")),
+                   actionBttn(style = "material-circle", color = "primary", size = "xs", no_outline = TRUE, 
+                              inputId = "prevs", label = NULL, icon = icon("chevron-circle-left")),
+                   actionBttn(style = "material-circle", color = "primary", size = "xs", no_outline = TRUE, 
+                              inputId = "nexts", label = NULL, icon = icon("chevron-circle-right"))
         )
       })
       output$soals <- renderUI({
@@ -367,7 +370,7 @@ server <- function(input, output, session){
                                                                    list(className = 'dt-center', targets = 2)),
                                                  initComplete = JS(
                                                    "function(settings, json) {",
-                                                   "$(this.api().table().header()).css({'background-color': '#000', 'color': '#fff'});",
+                                                   "$(this.api().table().header()).css({'background-color': '#03b1fc', 'color': '#fff'});",
                                                    "}")
                                                  ))
   })
